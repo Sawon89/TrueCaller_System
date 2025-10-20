@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TraceCall</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- App Title -->
+        <h1>
+            <i class="fa fa-phone"></i> 
+            <span class="trace">Trace</span><span class="call">Call</span>
+        </h1>
+        <h2 class="tagline">Smart Call & Location Tracker 🖨️ </h2>
+        <p class="subtitle">Made By Sawon 🙋‍♂️</p>
+
+        <!-- Search Form -->
+        <form method="POST">
+            <input type="text" id="phone" name="phone" placeholder="Enter phone number e.g. +12025550147" required>
+            <button type="submit"><i class="fa fa-search"></i> Search</button>
+        </form>
+
+        <!-- Results Section -->
+        {% if info %}
+            {% if "Error" in info %}
+                <div class="error-box">
+                    <strong>⚠️ Error:</strong> {{ info["Error"] }}
+                </div>
+            {% else %}
+                <div class="result-box">
+                    <h2>🔍 Search Result</h2>
+                    <p><strong>📞 Number:</strong> {{ info["Number"] }}</p>
+                    <p><strong>✅ Valid:</strong> {{ info["Valid"] }}</p>
+                    <p><strong>📊 Possible:</strong> {{ info["Call Possible"] }}</p>
+                    <p><strong>🌍 Country:</strong> {{ info["Country"] }}</p>
+                    <p><strong>📡 Carrier:</strong> {{ info["Operator"] }}</p>
+                    <p><strong>⏰ Time Zone:</strong> {{ info["Location"] }}</p>
+                </div>
+
+                {% if "Map" in info %}
+                    <h2>🗺️ Location Map</h2>
+                    <div class="map-container">
+                        {{ info.Map | safe }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
